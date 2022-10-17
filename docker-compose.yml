@@ -1,0 +1,19 @@
+ version: '3.8'
+ networks:
+  devaten-mssql-agent:
+    name: devaten-mssql-agent
+    
+ services:
+ 
+   onpremise-mssqlagent-container:
+     image: devaten/on-premises-mssql-agent
+     container_name: onpremise-mssqlagent-container
+     restart: unless-stopped
+     ports:
+       - "8115:8115"
+     environment:
+       - spring.activemq.broker-url=tcp://127.0.0.1:61616
+     volumes:
+       - ./h2:/opt/h2-data:rw
+     networks:
+       - devaten-mssql-agent
